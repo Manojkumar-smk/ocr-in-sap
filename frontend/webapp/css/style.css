@@ -1,0 +1,30 @@
+/* Invoice OCR Application - Custom Styles */
+
+.sapUiBody {
+    background-color: #f7f7f7;
+}
+
+/* Panel spacing */
+.sapMPanel {
+    margin-bottom: 1rem;
+}
+
+/* Form field styling */
+.sapUiForm .sapMLabel {
+    font-weight: bold;
+}
+
+/* File uploader styling */
+.sapUiUfdFileName {
+    font-weight: normal;
+}
+
+/* Results panel highlight */
+#resultsPanel .sapMPanel {
+    border: 2px solid #0a6ed1;
+}
+
+/* Error panel styling */
+#errorPanel {
+    margin-top: 1rem;
+}

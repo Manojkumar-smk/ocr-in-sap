@@ -1,0 +1,143 @@
+<mvc:View
+    controllerName="invoice.ocr.app.controller.InvoiceUpload"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.ui.layout.form"
+    displayBlock="true">
+
+    <Page
+        id="page"
+        title="{i18n>appTitle}"
+        showNavButton="false">
+
+        <content>
+            <!-- Upload Section -->
+            <Panel
+                id="uploadPanel"
+                headerText="{i18n>uploadPanelTitle}"
+                class="sapUiResponsiveMargin"
+                width="auto">
+
+                <content>
+                    <VBox class="sapUiSmallMargin">
+                        <MessageStrip
+                            text="{i18n>uploadInstructions}"
+                            showIcon="true"
+                            class="sapUiTinyMarginBottom" />
+
+                        <u:FileUploader
+                            id="fileUploader"
+                            name="invoiceFile"
+                            placeholder="{i18n>choosePdfFile}"
+                            fileType="pdf"
+                            mimeType="application/pdf"
+                            maximumFileSize="{viewModel>/maxFileSizeMB}"
+                            change=".onFileChange"
+                            width="100%"
+                            class="sapUiSmallMarginBottom" />
+
+                        <HBox>
+                            <Button
+                                id="uploadButton"
+                                text="{i18n>uploadButton}"
+                                type="Emphasized"
+                                press=".onUploadPress"
+                                icon="sap-icon://upload"
+                                class="sapUiTinyMarginEnd" />
+
+                            <Button
+                                id="clearButton"
+                                text="{i18n>clearButton}"
+                                press=".onClearPress"
+                                icon="sap-icon://clear-filter" />
+                        </HBox>
+                    </VBox>
+                </content>
+            </Panel>
+
+            <!-- Results Section -->
+            <Panel
+                id="resultsPanel"
+                headerText="{i18n>resultsPanelTitle}"
+                visible="{invoiceData>/showResults}"
+                class="sapUiResponsiveMargin"
+                width="auto">
+
+                <content>
+                    <VBox class="sapUiSmallMargin">
+                        <MessageStrip
+                            text="{invoiceData>/message}"
+                            type="Success"
+                            showIcon="true"
+                            showCloseButton="false"
+                            class="sapUiTinyMarginBottom" />
+
+                        <f:SimpleForm
+                            id="resultsForm"
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="3"
+                            labelSpanL="3"
+                            labelSpanM="3"
+                            labelSpanS="12"
+                            emptySpanXL="4"
+                            emptySpanL="4"
+                            emptySpanM="4"
+                            emptySpanS="0"
+                            columnsXL="1"
+                            columnsL="1"
+                            columnsM="1">
+
+                            <f:content>
+                                <Label text="{i18n>invoiceNumberLabel}" />
+                                <Text text="{invoiceData>/invoiceNumber}" class="sapUiSmallMarginBottom" />
+
+                                <Label text="{i18n>vendorNameLabel}" />
+                                <Text text="{invoiceData>/vendorName}" class="sapUiSmallMarginBottom" />
+
+                                <Label text="{i18n>fileNameLabel}" />
+                                <Text text="{invoiceData>/fileName}" class="sapUiSmallMarginBottom" />
+
+                                <Label text="{i18n>fileSizeLabel}" />
+                                <Text text="{invoiceData>/fileSizeKb} KB" class="sapUiSmallMarginBottom" />
+
+                                <Label text="{i18n>confidenceLabel}" />
+                                <Text text="{invoiceData>/confidenceScore}" class="sapUiSmallMarginBottom" />
+
+                                <Label text="{i18n>statusLabel}" />
+                                <ObjectStatus
+                                    text="{invoiceData>/status}"
+                                    state="Success" />
+                            </f:content>
+                        </f:SimpleForm>
+                    </VBox>
+                </content>
+            </Panel>
+
+            <!-- Error Section -->
+            <Panel
+                id="errorPanel"
+                visible="{viewModel>/hasError}"
+                class="sapUiResponsiveMargin"
+                width="auto">
+
+                <content>
+                    <MessageStrip
+                        text="{viewModel>/errorMessage}"
+                        type="Error"
+                        showIcon="true"
+                        showCloseButton="true"
+                        close=".onCloseError" />
+                </content>
+            </Panel>
+        </content>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Text text="{i18n>footerText}" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

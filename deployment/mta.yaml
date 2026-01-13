@@ -1,0 +1,49 @@
+_schema-version: "3.3"
+ID: invoice-ocr-system
+version: 1.0.0
+description: Invoice OCR System with SAP Document AI and HANA Cloud
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  # Python Backend Module
+  - name: invoice-ocr-backend
+    type: python
+    path: ../backend
+    parameters:
+      buildpack: python_buildpack
+      memory: 1024M
+      disk-quota: 512M
+    build-parameters:
+      builder: custom
+      commands:
+        - pip install -r requirements.txt
+    provides:
+      - name: backend-api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: invoice-ocr-hana
+
+  # UI5 Frontend Module
+  - name: invoice-ocr-frontend
+    type: html5
+    path: ../frontend
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+    requires:
+      - name: backend-api
+
+resources:
+  # SAP HANA Cloud Database
+  - name: invoice-ocr-hana
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}

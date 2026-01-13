@@ -1,0 +1,21 @@
+{
+  "name": "invoice-ocr-frontend",
+  "version": "1.0.0",
+  "description": "Invoice OCR UI5 Application",
+  "scripts": {
+    "start": "ui5 serve --port 8080",
+    "build": "ui5 build --all",
+    "serve": "ui5 serve"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^3.9.0"
+  },
+  "ui5": {
+    "dependencies": [
+      "@openui5/sap.ui.core",
+      "@openui5/sap.m",
+      "@openui5/sap.ui.unified",
+      "@openui5/themelib_sap_fiori_3"
+    ]
+  }
+}
